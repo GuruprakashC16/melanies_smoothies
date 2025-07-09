@@ -37,12 +37,12 @@ order_filled = st.checkbox("Mark order as filled?")
 
 # If ingredients are selected, show nutrition and submit
 if ingredients_list:
+    # ✅ Join selected fruits with single space
     ingredients_string = ' '.join(ingredients_list).strip()
 
+    # Show nutrition info for each selected fruit
     for fruit_chosen in ingredients_list:
-        ingredients_string += fruit_chosen + ' '
         search_on = pd_df.loc[pd_df['FRUIT_NAME'] == fruit_chosen, 'SEARCH_ON'].iloc[0]
-
         st.write('The search value for', fruit_chosen, 'is', search_on)
         st.subheader(fruit_chosen + ' Nutrition Information')
         smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + str(search_on))
@@ -51,10 +51,11 @@ if ingredients_list:
     # Get current timestamp
     current_ts = datetime.datetime.now().isoformat()
 
-    # Insert SQL statement
-   my_insert_stmt = f"""
+    # ✅ Insert SQL statement
+    my_insert_stmt = f"""
     INSERT INTO smoothies.public.orders (ingredients, name_on_order, order_filled, order_ts)
-    VALUES ('{ingredients_string}', '{name_on_order}', {str(order_filled).upper()}, '{current_ts}')"""
+    VALUES ('{ingredients_string}', '{name_on_order}', {str(order_filled).upper()}, '{current_ts}')
+    """
 
     # Submit button
     time_to_insert = st.button('Submit Order')
