@@ -37,7 +37,7 @@ order_filled = st.checkbox("Mark order as filled?")
 
 # If ingredients are selected, show nutrition and submit
 if ingredients_list:
-    ingredients_string = ''
+    ingredients_string = ' '.join(ingredients_list).strip()
 
     for fruit_chosen in ingredients_list:
         ingredients_string += fruit_chosen + ' '
@@ -52,8 +52,9 @@ if ingredients_list:
     current_ts = datetime.datetime.now().isoformat()
 
     # Insert SQL statement
-    my_insert_stmt = """insert into smoothies.public.orders(ingredients, name_on_order, order_filled, order_ts)
-        values ('""" + ingredients_string.strip() + """', '""" + name_on_order + """', """ + str(order_filled).upper() + """, '""" + current_ts + """')"""
+   my_insert_stmt = f"""
+    INSERT INTO smoothies.public.orders (ingredients, name_on_order, order_filled, order_ts)
+    VALUES ('{ingredients_string}', '{name_on_order}', {str(order_filled).upper()}, '{current_ts}')"""
 
     # Submit button
     time_to_insert = st.button('Submit Order')
