@@ -44,7 +44,7 @@ if ingredients_list:
         sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
 
      #order filled checkbox
-       order_filled = st.checkbox("Mark order as filled?")
+        order_filled = st.checkbox("Mark order as filled?")
 
 
     #st.write(ingredients_string)
