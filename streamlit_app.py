@@ -43,11 +43,14 @@ if ingredients_list:
         smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/" + str(search_on))
         sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
 
+     #order filled checkbox
+     order_filled = st.checkbox("Mark order as filled?")
+
 
     #st.write(ingredients_string)
 
-    my_insert_stmt = """ insert into smoothies.public.orders(ingredients,name_on_order)
-            values ('""" + ingredients_string + """','""" + name_on_order + """')"""
+    my_insert_stmt = """insert into smoothies.public.orders(ingredients, name_on_order, order_filled, order_ts)
+        values ('""" + ingredients_string.strip() + """', '""" + name_on_order + """', """ + str(order_filled).upper() + """, '""" + current_ts + """')"""
 
 
     #st.write(my_insert_stmt)
